@@ -9,12 +9,11 @@
     <a href="https://pepy.tech/project/transparent-background"><image src="https://static.pepy.tech/personalized-badge/transparent-background?period=total&units=none&left_color=grey&right_color=orange&left_text=Downloads"></a>
 </p>
 
-
 This is a background removing tool powered by [InSPyReNet (ACCV 2022)](https://github.com/plemeri/InSPyReNet.git). You can easily remove background from the image or video or bunch of other stuffs when you can make the background transparent!
 
 Image | Video | Webcam
 :-:|:-:|:-:
-<img src=https://raw.githubusercontent.com/plemeri/transparent-background/main/figures/demo_aeroplane.gif height=200px> | <img src=https://raw.githubusercontent.com/plemeri/transparent-background/main/figures/demo_b5.gif height=200px> | <img src=https://raw.githubusercontent.com/plemeri/transparent-background/main/figures/demo_webcam.gif height=200px>
+<img src=<https://raw.githubusercontent.com/plemeri/transparent-background/main/figures/demo_aeroplane.gif> height=200px> | <img src=<https://raw.githubusercontent.com/plemeri/transparent-background/main/figures/demo_b5.gif> height=200px> | <img src=<https://raw.githubusercontent.com/plemeri/transparent-background/main/figures/demo_webcam.gif> height=200px>
 
 ## :newspaper: News
 
@@ -36,6 +35,7 @@ package | version (>=)
 `pyvirtualcam`  | `0.6.0`
 
 Note: If you have any problem with [`pyvirtualcam`](https://pypi.org/project/pyvirtualcam/), please visit their github repository or pypi homepage. Due to the backend workflow for Windows and macOS, we only support Linux for webcam input.
+
 ### Dependencies (webcam input)
 
 We basically follow the virtual camera settings from [`pyvirtualcam`](https://pypi.org/project/pyvirtualcam/). If you do not choose to install virtual camera, it will visualize real-time output with `cv2.imshow`.
@@ -61,12 +61,14 @@ Install OBS virtual camera from [install OBS](https://obsproject.com/).
 #### C. macOS (OBS) [not stable]
 
 Follow the steps below.
+
 * [Install OBS](https://obsproject.com/).
 * Start OBS.
 * Click "Start Virtual Camera" (bottom right), then "Stop Virtual Camera".
 * Close OBS.
 
 ### Install `transperent-background`
+
 ```bash
 # via pypi
 $ pip install transparent-background
@@ -86,28 +88,31 @@ $ pip install .
 # for apple silicon mps backend, use "PYTORCH_ENABLE_MPS_FALLBACK=1" before the command (requires torch >= 1.13)
 $ transparent-background --source [SOURCE] --dest [DEST] --type [TYPE] --ckpt [CKPT] (--fast) (--jit)
 ```
+
 * `--source [SOURCE]`: Specify your data in this argument.
-    * Single image - `image.png`
-    * Folder containing images - `path/to/img/folder`
-    * Single video - `video.mp4`
-    * Folder containing videos - `path/to/vid/folder`
-    * Integer for webcam address - `0` (e.g., if your webcam is at `/dev/video0`.)
+  * Single image - `image.png`
+  * Folder containing images - `path/to/img/folder`
+  * Single video - `video.mp4`
+  * Folder containing videos - `path/to/vid/folder`
+  * Integer for webcam address - `0` (e.g., if your webcam is at `/dev/video0`.)
 * `--dest [DEST]` (optional): Specify your destination folder. Default location is current directory.
 * `--type [TYPE]` (optional): Choose between `rgba`, `map` `green`, `blur`, `overlay`, and another image file. Default is `rgba`.
-    * `rgba` will generate RGBA output regarding saliency score as an alpha map. Note that this will not work for video and webcam input. 
-    * `map` will output saliency map only. 
-    * `green` will change the background with green screen. 
-    * `white` will change the background with white color. -> [2023.05.24] Contributed by [carpedm20](https://github.com/carpedm20) 
-    * `'[255, 0, 0]'` will change the background with color code [255, 0, 0]. Please use with single quotes. -> [2023.05.24] Contributed by [carpedm20](https://github.com/carpedm20) 
-    * `blur` will blur the background.
-    * `overlay` will cover the salient object with translucent green color, and highlight the edges.
-    * Another image file (e.g., `samples/backgroud.png`) will be used as a background, and the object will be overlapped on it.
+  * `rgba` will generate RGBA output regarding saliency score as an alpha map. Note that this will not work for video and webcam input.
+  * `map` will output saliency map only.
+  * `green` will change the background with green screen.
+  * `white` will change the background with white color. -> [2023.05.24] Contributed by [carpedm20](https://github.com/carpedm20)
+  * `'[255, 0, 0]'` will change the background with color code [255, 0, 0]. Please use with single quotes. -> [2023.05.24] Contributed by [carpedm20](https://github.com/carpedm20)
+  * `blur` will blur the background.
+  * `overlay` will cover the salient object with translucent green color, and highlight the edges.
+  * Another image file (e.g., `samples/backgroud.png`) will be used as a background, and the object will be overlapped on it.
 * `--ckpt [CKPT]` (optional): Use other checkpoint file. Default is trained with composite dataset and will be automatically downloaded if not available. Please refer to [Model Zoo](https://github.com/plemeri/InSPyReNet/blob/main/docs/model_zoo.md) from [InSPyReNet](https://github.com/plemeri/InSPyReNet) for available pre-trained checkpoints.
-* `--fast` (optional): Fast mode. If specified, it will use low-resolution input and model trained with LR scale. May decrease performance but reduces inference time and gpu memory usage. 
+* `--fast` (optional): Fast mode. If specified, it will use low-resolution input and model trained with LR scale. May decrease performance but reduces inference time and gpu memory usage.
 * `--jit` (optional): Torchscript mode. If specified, it will trace model with pytorch built-in torchscript JIT compiler. May cause delay in initialization, but reduces inference time and gpu memory usage.
-    
+
 ### :crystal_ball: Python API
+
 * Usage Example
+
 ```python
 import cv2
 
@@ -144,8 +149,8 @@ while cap.isOpened():
 
     if ret is False:
         break
-        
-    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) 
+
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     img = Image.fromarray(frame).convert('RGB')
 
     if writer is None:
@@ -174,6 +179,6 @@ See [LICENCE](https://github.com/plemeri/transparent-background/blob/main/LICENS
 
 ### Acknowledgement
 
-This work was supported by Institute of Information & communications Technology Planning & Evaluation (IITP) grant funded by the Korea government (MSIT) 
-(No.2017-0-00897, Development of Object Detection and Recognition for Intelligent Vehicles) and 
+This work was supported by Institute of Information & communications Technology Planning & Evaluation (IITP) grant funded by the Korea government (MSIT)
+(No.2017-0-00897, Development of Object Detection and Recognition for Intelligent Vehicles) and
 (No.B0101-15-0266, Development of High Performance Visual BigData Discovery Platform for Large-Scale Realtime Data Analysis)
